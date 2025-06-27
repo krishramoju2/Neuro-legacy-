@@ -940,6 +940,383 @@
             cursor: pointer;
             margin-top: 10px;
         }
+        
+        /* Music App Styles */
+        .music-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        
+        .music-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .music-tabs {
+            display: flex;
+            background-color: #333;
+        }
+        
+        .music-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #444;
+            color: #ddd;
+            border-right: 1px solid #555;
+        }
+        
+        .music-tab.active {
+            background-color: #222;
+            color: white;
+        }
+        
+        .music-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #222;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .library-section {
+            margin-bottom: 20px;
+        }
+        
+        .library-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .library-item {
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .library-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .library-item:hover {
+            background-color: #333;
+        }
+        
+        .library-item.active {
+            background-color: #4a00e0;
+        }
+        
+        .playlists {
+            margin-top: 20px;
+        }
+        
+        .playlist-item {
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .playlist-item:hover {
+            background-color: #333;
+        }
+        
+        .playlist-item.active {
+            background-color: #4a00e0;
+        }
+        
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+            outline: none;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .song-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .song-card {
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .song-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .song-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+        
+        .song-info {
+            padding: 10px;
+        }
+        
+        .song-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .song-artist {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .now-playing {
+            height: 80px;
+            background-color: #222;
+            border-top: 1px solid #444;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .now-playing-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .now-playing-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        
+        .now-playing-text {
+            flex: 1;
+        }
+        
+        .now-playing-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .now-playing-artist {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .control-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #4a00e0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        
+        .play-button {
+            width: 40px;
+            height: 40px;
+            background-color: #8e2de2;
+        }
+        
+        .progress-container {
+            width: 100%;
+            max-width: 500px;
+            height: 5px;
+            background-color: #444;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #8e2de2;
+            border-radius: 5px;
+            width: 0%;
+        }
+        
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 500px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: flex-end;
+        }
+        
+        .volume-slider {
+            width: 100px;
+            margin-left: 10px;
+        }
+        
+        /* Music Player Full Screen */
+        .fullscreen-player {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4a00e0, #8e2de2);
+            z-index: 50;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .fullscreen-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .fullscreen-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .fullscreen-artist {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .fullscreen-progress {
+            width: 80%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        
+        .fullscreen-controls {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .fullscreen-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 15px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .fullscreen-play {
+            width: 70px;
+            height: 70px;
+            font-size: 30px;
+        }
+        
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Equalizer Styles */
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            height: 50px;
+            margin-top: 10px;
+        }
+        
+        .equalizer-bar {
+            width: 4px;
+            background-color: #8e2de2;
+            margin: 0 2px;
+            border-radius: 2px;
+            animation: equalizerAnimation 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes equalizerAnimation {
+            0%, 100% { height: 10px; }
+            50% { height: 30px; }
+        }
+        
+        .equalizer-bar:nth-child(1) { animation-delay: 0s; }
+        .equalizer-bar:nth-child(2) { animation-delay: 0.2s; }
+        .equalizer-bar:nth-child(3) { animation-delay: 0.4s; }
+        .equalizer-bar:nth-child(4) { animation-delay: 0.6s; }
+        .equalizer-bar:nth-child(5) { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
@@ -979,6 +1356,11 @@
         <div class="icon" onclick="openGPayApp()">
             <i class="fab fa-google-pay"></i>
             <span>GPay</span>
+        </div>
+        
+        <div class="icon" onclick="openMusicApp()">
+            <i class="fas fa-music"></i>
+            <span>Music Player</span>
         </div>
     </div>
     
@@ -1379,6 +1761,163 @@
         </div>
     </div>
     
+    <!-- Music App Window -->
+    <div class="window" id="musicAppWindow">
+        <div class="window-header">
+            <div class="window-title">Music Player</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('musicAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('musicAppWindow')"></div>
+                <div class="window-control close" onclick="closeMusicApp()"></div>
+            </div>
+        </div>
+        <div class="music-app">
+            <div class="music-header">
+                Music Player
+            </div>
+            <div class="music-tabs">
+                <div class="music-tab active" onclick="switchMusicTab('library')">
+                    <i class="fas fa-music"></i> Library
+                </div>
+                <div class="music-tab" onclick="switchMusicTab('browse')">
+                    <i class="fas fa-compass"></i> Browse
+                </div>
+                <div class="music-tab" onclick="switchMusicTab('radio')">
+                    <i class="fas fa-broadcast-tower"></i> Radio
+                </div>
+            </div>
+            <div class="music-content">
+                <div class="sidebar">
+                    <div class="library-section">
+                        <div class="library-title">Library</div>
+                        <div class="library-item active">
+                            <i class="fas fa-music"></i> Songs
+                        </div>
+                        <div class="library-item">
+                            <i class="fas fa-user"></i> Artists
+                        </div>
+                        <div class="library-item">
+                            <i class="fas fa-compact-disc"></i> Albums
+                        </div>
+                        <div class="library-item">
+                            <i class="fas fa-list"></i> Playlists
+                        </div>
+                    </div>
+                    <div class="playlists">
+                        <div class="library-title">Playlists</div>
+                        <div class="playlist-item">
+                            <i class="fas fa-heart"></i> Favorites
+                        </div>
+                        <div class="playlist-item">
+                            <i class="fas fa-running"></i> Workout
+                        </div>
+                        <div class="playlist-item">
+                            <i class="fas fa-moon"></i> Sleep
+                        </div>
+                        <div class="playlist-item">
+                            <i class="fas fa-car"></i> Road Trip
+                        </div>
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search for songs, artists, or albums">
+                    </div>
+                    <div class="section-title">Recently Played</div>
+                    <div class="song-list" id="recentSongs">
+                        <!-- Recent songs will be added here dynamically -->
+                    </div>
+                    <div class="section-title">Popular Albums</div>
+                    <div class="song-list" id="popularAlbums">
+                        <!-- Popular albums will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+            <div class="now-playing">
+                <div class="now-playing-info">
+                    <img src="https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228" class="now-playing-image" id="nowPlayingImage">
+                    <div class="now-playing-text">
+                        <div class="now-playing-title" id="nowPlayingTitle">No song selected</div>
+                        <div class="now-playing-artist" id="nowPlayingArtist">Select a song to play</div>
+                    </div>
+                    <div class="equalizer" id="equalizer">
+                        <div class="equalizer-bar"></div>
+                        <div class="equalizer-bar"></div>
+                        <div class="equalizer-bar"></div>
+                        <div class="equalizer-bar"></div>
+                        <div class="equalizer-bar"></div>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="control-buttons">
+                        <div class="control-button" onclick="previousSong()">
+                            <i class="fas fa-step-backward"></i>
+                        </div>
+                        <div class="control-button" onclick="toggleShuffle()">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <div class="control-button play-button" onclick="togglePlay()" id="playButton">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="control-button" onclick="toggleRepeat()">
+                            <i class="fas fa-redo"></i>
+                        </div>
+                        <div class="control-button" onclick="nextSong()">
+                            <i class="fas fa-step-forward"></i>
+                        </div>
+                    </div>
+                    <div class="progress-container" onclick="seekSong(event)">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="totalTime">0:00</span>
+                    </div>
+                </div>
+                <div class="volume-control">
+                    <i class="fas fa-volume-up"></i>
+                    <input type="range" min="0" max="1" step="0.01" value="0.5" class="volume-slider" id="volumeSlider" oninput="changeVolume()">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fullscreen Music Player -->
+    <div class="fullscreen-player" id="fullscreenPlayer">
+        <div class="close-fullscreen" onclick="closeFullscreenPlayer()">
+            <i class="fas fa-times"></i>
+        </div>
+        <img src="https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228" class="fullscreen-image" id="fullscreenImage">
+        <div class="fullscreen-title" id="fullscreenTitle">No song selected</div>
+        <div class="fullscreen-artist" id="fullscreenArtist">Select a song to play</div>
+        <div class="fullscreen-progress">
+            <div class="progress-container" onclick="seekSong(event)">
+                <div class="progress-bar" id="fullscreenProgressBar"></div>
+            </div>
+            <div class="time-display">
+                <span id="fullscreenCurrentTime">0:00</span>
+                <span id="fullscreenTotalTime">0:00</span>
+            </div>
+        </div>
+        <div class="fullscreen-controls">
+            <div class="fullscreen-button" onclick="toggleShuffle()">
+                <i class="fas fa-random"></i>
+            </div>
+            <div class="fullscreen-button" onclick="previousSong()">
+                <i class="fas fa-step-backward"></i>
+            </div>
+            <div class="fullscreen-button fullscreen-play" onclick="togglePlay()" id="fullscreenPlayButton">
+                <i class="fas fa-play"></i>
+            </div>
+            <div class="fullscreen-button" onclick="nextSong()">
+                <i class="fas fa-step-forward"></i>
+            </div>
+            <div class="fullscreen-button" onclick="toggleRepeat()">
+                <i class="fas fa-redo"></i>
+            </div>
+        </div>
+    </div>
+    
     <!-- Photo Viewer -->
     <div class="viewer" id="photo-viewer">
         <img class="viewer-img" id="viewer-image" src="">
@@ -1426,6 +1965,7 @@
             document.getElementById('photoAppWindow').style.display = 'none';
             document.getElementById('zomatoAppWindow').style.display = 'none';
             document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
             
             // Reset window position and size when opening
             const window = document.getElementById('appWindow');
@@ -1448,6 +1988,7 @@
             document.getElementById('appWindow').style.display = 'none';
             document.getElementById('zomatoAppWindow').style.display = 'none';
             document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'block';
             initCamera();
             loadGallery();
@@ -1473,6 +2014,7 @@
             document.getElementById('appWindow').style.display = 'none';
             document.getElementById('photoAppWindow').style.display = 'none';
             document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'block';
             loadRestaurants();
             
@@ -1500,6 +2042,7 @@
             document.getElementById('appWindow').style.display = 'none';
             document.getElementById('photoAppWindow').style.display = 'none';
             document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'block';
             
             // Reset window position and size when opening
@@ -1522,6 +2065,33 @@
         function closeGPayApp() {
             document.getElementById('gpayAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'none';
+        }
+        
+        function openMusicApp() {
+            document.getElementById('musicAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('musicAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+            
+            // Load music library
+            loadMusicLibrary();
+        }
+        
+        function closeMusicApp() {
+            document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+            stopMusic();
         }
         
         function minimizeWindow(windowId) {
@@ -2093,6 +2663,360 @@
             // Show Zomato main screen
             openZomatoApp();
         }
+        
+        // Music App Functionality
+        let audioPlayer = new Audio();
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isShuffleOn = false;
+        let isRepeatOn = false;
+        let progressInterval;
+        let songs = [];
+        
+        // Sample music library (in a real app, you would load this from a server or local files)
+        const musicLibrary = [
+            {
+                id: 1,
+                title: "Blinding Lights",
+                artist: "The Weeknd",
+                album: "After Hours",
+                duration: 203,
+                cover: "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            },
+            {
+                id: 2,
+                title: "Save Your Tears",
+                artist: "The Weeknd",
+                album: "After Hours",
+                duration: 215,
+                cover: "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+            },
+            {
+                id: 3,
+                title: "Levitating",
+                artist: "Dua Lipa",
+                album: "Future Nostalgia",
+                duration: 223,
+                cover: "https://i.scdn.co/image/ab67616d00001e026b072f77037403a42a1f1b22",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            },
+            {
+                id: 4,
+                title: "Don't Start Now",
+                artist: "Dua Lipa",
+                album: "Future Nostalgia",
+                duration: 183,
+                cover: "https://i.scdn.co/image/ab67616d00001e026b072f77037403a42a1f1b22",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+            },
+            {
+                id: 5,
+                title: "Watermelon Sugar",
+                artist: "Harry Styles",
+                album: "Fine Line",
+                duration: 174,
+                cover: "https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+            },
+            {
+                id: 6,
+                title: "Adore You",
+                artist: "Harry Styles",
+                album: "Fine Line",
+                duration: 207,
+                cover: "https://i.scdn.co/image/ab67616d00001e02f7db43292a6a99b21b51d5b4",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+            },
+            {
+                id: 7,
+                title: "Circles",
+                artist: "Post Malone",
+                album: "Hollywood's Bleeding",
+                duration: 215,
+                cover: "https://i.scdn.co/image/ab67616d00001e02f2d7c3638e30a1db1ec3fe4a",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
+            },
+            {
+                id: 8,
+                title: "Sunflower",
+                artist: "Post Malone, Swae Lee",
+                album: "Spider-Man: Into the Spider-Verse",
+                duration: 158,
+                cover: "https://i.scdn.co/image/ab67616d00001e02f2d7c3638e30a1db1ec3fe4a",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+            }
+        ];
+        
+        function loadMusicLibrary() {
+            songs = [...musicLibrary];
+            
+            // Display recent songs
+            const recentSongs = document.getElementById('recentSongs');
+            recentSongs.innerHTML = '';
+            
+            songs.slice(0, 4).forEach(song => {
+                const songCard = document.createElement('div');
+                songCard.className = 'song-card';
+                songCard.dataset.id = song.id;
+                songCard.onclick = () => playSong(song.id);
+                
+                songCard.innerHTML = `
+                    <img src="${song.cover}" class="song-image" alt="${song.title}">
+                    <div class="song-info">
+                        <div class="song-title">${song.title}</div>
+                        <div class="song-artist">${song.artist}</div>
+                    </div>
+                `;
+                
+                recentSongs.appendChild(songCard);
+            });
+            
+            // Display popular albums (grouped by album)
+            const popularAlbums = document.getElementById('popularAlbums');
+            popularAlbums.innerHTML = '';
+            
+            const albums = {};
+            songs.forEach(song => {
+                if (!albums[song.album]) {
+                    albums[song.album] = {
+                        cover: song.cover,
+                        artist: song.artist,
+                        songs: []
+                    };
+                }
+                albums[song.album].songs.push(song);
+            });
+            
+            Object.keys(albums).slice(0, 4).forEach(albumName => {
+                const album = albums[albumName];
+                const albumCard = document.createElement('div');
+                albumCard.className = 'song-card';
+                albumCard.onclick = () => playAlbum(albumName);
+                
+                albumCard.innerHTML = `
+                    <img src="${album.cover}" class="song-image" alt="${albumName}">
+                    <div class="song-info">
+                        <div class="song-title">${albumName}</div>
+                        <div class="song-artist">${album.artist}</div>
+                    </div>
+                `;
+                
+                popularAlbums.appendChild(albumCard);
+            });
+        }
+        
+        function playSong(songId) {
+            const songIndex = songs.findIndex(s => s.id == songId);
+            if (songIndex === -1) return;
+            
+            currentSongIndex = songIndex;
+            const song = songs[currentSongIndex];
+            
+            // Update player UI
+            document.getElementById('nowPlayingImage').src = song.cover;
+            document.getElementById('nowPlayingTitle').textContent = song.title;
+            document.getElementById('nowPlayingArtist').textContent = song.artist;
+            document.getElementById('fullscreenImage').src = song.cover;
+            document.getElementById('fullscreenTitle').textContent = song.title;
+            document.getElementById('fullscreenArtist').textContent = song.artist;
+            
+            // Format and display duration
+            const durationFormatted = formatTime(song.duration);
+            document.getElementById('totalTime').textContent = durationFormatted;
+            document.getElementById('fullscreenTotalTime').textContent = durationFormatted;
+            
+            // Set audio source
+            audioPlayer.src = song.audio;
+            audioPlayer.load();
+            
+            // Play the song
+            playMusic();
+        }
+        
+        function playAlbum(albumName) {
+            const albumSongs = songs.filter(s => s.album === albumName);
+            if (albumSongs.length === 0) return;
+            
+            // Play the first song in the album
+            playSong(albumSongs[0].id);
+            
+            // In a real app, you would queue the rest of the album songs
+        }
+        
+        function playMusic() {
+            audioPlayer.play();
+            isPlaying = true;
+            
+            // Update play/pause buttons
+            document.getElementById('playButton').innerHTML = '<i class="fas fa-pause"></i>';
+            document.getElementById('fullscreenPlayButton').innerHTML = '<i class="fas fa-pause"></i>';
+            
+            // Show equalizer animation
+            document.getElementById('equalizer').style.display = 'flex';
+            
+            // Start progress tracking
+            clearInterval(progressInterval);
+            progressInterval = setInterval(updateProgress, 1000);
+        }
+        
+        function pauseMusic() {
+            audioPlayer.pause();
+            isPlaying = false;
+            
+            // Update play/pause buttons
+            document.getElementById('playButton').innerHTML = '<i class="fas fa-play"></i>';
+            document.getElementById('fullscreenPlayButton').innerHTML = '<i class="fas fa-play"></i>';
+            
+            // Hide equalizer animation
+            document.getElementById('equalizer').style.display = 'none';
+            
+            // Stop progress tracking
+            clearInterval(progressInterval);
+        }
+        
+        function stopMusic() {
+            pauseMusic();
+            audioPlayer.currentTime = 0;
+            updateProgress();
+        }
+        
+        function togglePlay() {
+            if (audioPlayer.src) {
+                if (isPlaying) {
+                    pauseMusic();
+                } else {
+                    playMusic();
+                }
+            } else if (songs.length > 0) {
+                // If no song is selected, play the first one
+                playSong(songs[0].id);
+            }
+        }
+        
+        function toggleShuffle() {
+            isShuffleOn = !isShuffleOn;
+            const shuffleButton = document.querySelector('.control-button:nth-child(2)');
+            const fullscreenShuffleButton = document.querySelector('.fullscreen-button:nth-child(1)');
+            
+            if (isShuffleOn) {
+                shuffleButton.style.backgroundColor = '#8e2de2';
+                fullscreenShuffleButton.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                
+                // Shuffle the songs array (except the currently playing song)
+                const currentSong = songs[currentSongIndex];
+                const otherSongs = songs.filter((_, index) => index !== currentSongIndex);
+                
+                // Fisher-Yates shuffle algorithm
+                for (let i = otherSongs.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [otherSongs[i], otherSongs[j]] = [otherSongs[j], otherSongs[i]];
+                }
+                
+                songs = [currentSong, ...otherSongs];
+            } else {
+                shuffleButton.style.backgroundColor = '';
+                fullscreenShuffleButton.style.backgroundColor = '';
+                
+                // Restore original order
+                songs = [...musicLibrary];
+            }
+        }
+        
+        function toggleRepeat() {
+            isRepeatOn = !isRepeatOn;
+            const repeatButton = document.querySelector('.control-button:nth-child(4)');
+            const fullscreenRepeatButton = document.querySelector('.fullscreen-button:nth-child(5)');
+            
+            if (isRepeatOn) {
+                repeatButton.style.backgroundColor = '#8e2de2';
+                fullscreenRepeatButton.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                audioPlayer.loop = true;
+            } else {
+                repeatButton.style.backgroundColor = '';
+                fullscreenRepeatButton.style.backgroundColor = '';
+                audioPlayer.loop = false;
+            }
+        }
+        
+        function previousSong() {
+            if (audioPlayer.currentTime > 3) {
+                // If more than 3 seconds into the song, restart it
+                audioPlayer.currentTime = 0;
+                updateProgress();
+            } else {
+                // Otherwise go to previous song
+                currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+                playSong(songs[currentSongIndex].id);
+            }
+        }
+        
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            playSong(songs[currentSongIndex].id);
+        }
+        
+        function updateProgress() {
+            if (!isNaN(audioPlayer.duration)) {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                document.getElementById('progressBar').style.width = `${progress}%`;
+                document.getElementById('fullscreenProgressBar').style.width = `${progress}%`;
+                
+                document.getElementById('currentTime').textContent = formatTime(audioPlayer.currentTime);
+                document.getElementById('fullscreenCurrentTime').textContent = formatTime(audioPlayer.currentTime);
+            }
+        }
+        
+        function seekSong(event) {
+            if (!isNaN(audioPlayer.duration)) {
+                const progressContainer = event.currentTarget;
+                const clickPosition = event.clientX - progressContainer.getBoundingClientRect().left;
+                const containerWidth = progressContainer.clientWidth;
+                const seekPercentage = clickPosition / containerWidth;
+                audioPlayer.currentTime = seekPercentage * audioPlayer.duration;
+                updateProgress();
+            }
+        }
+        
+        function changeVolume() {
+            const volume = document.getElementById('volumeSlider').value;
+            audioPlayer.volume = volume;
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
+        function switchMusicTab(tabName) {
+            // In a full implementation, this would switch between different views
+            const tabs = document.querySelectorAll('.music-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.querySelector(`.music-tab:nth-child(${tabName === 'library' ? 1 : tabName === 'browse' ? 2 : 3})`).classList.add('active');
+        }
+        
+        function openFullscreenPlayer() {
+            document.getElementById('fullscreenPlayer').style.display = 'flex';
+        }
+        
+        function closeFullscreenPlayer() {
+            document.getElementById('fullscreenPlayer').style.display = 'none';
+        }
+        
+        // Set up audio player event listeners
+        audioPlayer.addEventListener('ended', () => {
+            if (!isRepeatOn) {
+                nextSong();
+            }
+        });
+        
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        
+        // Initialize volume
+        changeVolume();
     </script>
 </body>
 </html>
