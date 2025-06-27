@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools OS Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #000428, #004e92);
+            color: white;
+            position: relative;
+        }
+        
+        .desktop {
+            height: calc(100vh - 40px);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 100px);
+            grid-auto-rows: 120px;
+            gap: 20px;
+            align-content: start;
+            overflow: hidden;
+        }
+        
+        .taskbar {
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        .start-button {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+        }
+        
+        .time {
+            margin-left: auto;
+            padding: 0 10px;
+        }
+        
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+        
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .icon i {
+            font-size: 40px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .icon span {
+            font-size: 12px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .window.maximized {
+            width: 100% !important;
+            height: calc(100vh - 40px) !important;
+            top: 0 !important;
+            left: 0 !important;
+            transform: none !important;
+            border-radius: 0;
+        }
+        
+        .window-header {
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            cursor: move;
+            user-select: none;
+        }
+        
+        .window-title {
+            font-weight: bold;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .window-control {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .minimize {
+            background: #f1c40f;
+        }
+        
+        .maximize {
+            background: #2ecc71;
+        }
+        
+        .close {
+            background: #e74c3c;
+        }
+        
+        .window-content {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: calc(100% - 40px);
+            overflow: auto;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 20;
+            display: none;
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        /* Photo App Styles */
+        .photo-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #222;
+        }
+        
+        .camera-container {
+            flex: 1;
+            position: relative;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        #camera-view {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .camera-controls {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #333;
+        }
+        
+        .capture-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f00;
+            border: 4px solid white;
+            cursor: pointer;
+        }
+        
+        .settings-panel {
+            display: flex;
+            background-color: #444;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        
+        .setting-group {
+            margin-right: 20px;
+        }
+        
+        .setting-group h4 {
+            margin-bottom: 5px;
+            color: #ddd;
+        }
+        
+        .setting-option {
+            margin-bottom: 5px;
+        }
+        
+        .setting-option label {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #ccc;
+            cursor: pointer;
+        }
+        
+        .setting-option input[type="range"] {
+            width: 150px;
+        }
+        
+        .gallery {
+            display: none;
+            flex-wrap: wrap;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #333;
+            height: 100%;
+        }
+        
+        .photo-thumbnail {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .photo-thumbnail:hover {
+            border-color: #f00;
+            transform: scale(1.05);
+        }
+        
+        .viewer {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 30;
+            flex-direction: column;
+        }
+        
+        .viewer-img {
+            max-width: 100%;
+            max-height: 90%;
+            object-fit: contain;
+            margin: auto;
+        }
+        
+        .viewer-controls {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+        
+        .viewer-btn {
+            margin: 0 10px;
+            padding: 5px 15px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .tab-bar {
+            display: flex;
+            background-color: #333;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #444;
+            color: #ddd;
+            border-right: 1px solid #555;
+        }
+        
+        .tab.active {
+            background-color: #222;
+            color: white;
+        }
+        
+        .app-content {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        /* Zomato App Styles */
+        .zomato-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #cb202d;
+            color: white;
+        }
+        
+        .zomato-header {
+            padding: 15px;
+            background-color: #cb202d;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .zomato-search {
+            padding: 10px;
+            background-color: #e23744;
+        }
+        
+        .zomato-search input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+        }
+        
+        .restaurant-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .restaurant-card {
+            background-color: white;
+            color: #333;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .restaurant-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .restaurant-details {
+            padding: 10px;
+        }
+        
+        .restaurant-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .restaurant-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .restaurant-rating {
+            color: #cb202d;
+            font-weight: bold;
+        }
+        
+        .restaurant-cuisine {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .order-btn {
+            background-color: #cb202d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        
+        .order-screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            background-color: white;
+            color: #333;
+        }
+        
+        .order-header {
+            padding: 15px;
+            background-color: #cb202d;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .order-restaurant {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .order-restaurant img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        
+        .order-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .item-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .item-control {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        
+        .order-summary {
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .total-row {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .checkout-btn {
+            background-color: #cb202d;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        /* GPay App Styles */
+        .gpay-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #5f6368;
+            color: white;
+        }
+        
+        .gpay-header {
+            padding: 15px;
+            background-color: #4285f4;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .gpay-balance {
+            padding: 20px;
+            text-align: center;
+            background-color: #5f6368;
+        }
+        
+        .balance-amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .balance-label {
+            font-size: 14px;
+            color: #ccc;
+        }
+        
+        .gpay-actions {
+            display: flex;
+            padding: 10px;
+            background-color: #5f6368;
+            border-bottom: 1px solid #444;
+        }
+        
+        .gpay-action {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .gpay-action i {
+            font-size: 24px;
+            margin-bottom: 5px;
+            background-color: #4285f4;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gpay-transactions {
+            flex: 1;
+            overflow-y: auto;
+            background-color: white;
+            color: #333;
+        }
+        
+        .transaction {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .transaction-details {
+            flex: 1;
+        }
+        
+        .transaction-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .transaction-info {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .transaction-amount {
+            font-weight: bold;
+        }
+        
+        .payment-screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            background-color: white;
+            color: #333;
+        }
+        
+        .payment-header {
+            padding: 15px;
+            background-color: #4285f4;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .payment-amount {
+            padding: 30px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .payment-recipient {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .recipient-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #4285f4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        
+        .payment-methods {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        
+        .method-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .method-selected {
+            margin-left: auto;
+            color: #4285f4;
+            display: none;
+        }
+        
+        .payment-method.selected .method-selected {
+            display: block;
+        }
+        
+        .pay-button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px;
+            border-radius: 5px;
+        }
+        
+        .success-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background-color: white;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #34a853;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .success-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .success-message {
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .done-button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="desktop">
+        <div class="icon" onclick="openApp('Stocks AI', 'https://krishramoju2.github.io/Stocks-/')">
+            <i class="fas fa-chart-line"></i>
+            <span>Stocks AI</span>
+        </div>
+        
+        <div class="icon" onclick="openApp('Cyber Security', 'https://krishramoju2.github.io/Cybersecurity/')">
+            <i class="fas fa-shield-alt"></i>
+            <span>Cyber Security</span>
+        </div>
+        
+        <div class="icon" onclick="openApp('Space Explorer', 'https://krishramoju2.github.io/Space-/')">
+            <i class="fas fa-rocket"></i>
+            <span>Space Explorer</span>
+        </div>
+        
+        <div class="icon" onclick="openApp('Deep Sea', 'https://krishramoju2.github.io/Deep-sea/')">
+            <i class="fas fa-water"></i>
+            <span>Deep Sea</span>
+        </div>
+        
+        <div class="icon" onclick="openPhotoApp()">
+            <i class="fas fa-camera"></i>
+            <span>Photo App</span>
+        </div>
+        
+        <div class="icon" onclick="openZomatoApp()">
+            <i class="fas fa-utensils"></i>
+            <span>Zomato</span>
+        </div>
+        
+        <div class="icon" onclick="openGPayApp()">
+            <i class="fab fa-google-pay"></i>
+            <span>GPay</span>
+        </div>
+    </div>
+    
+    <div class="taskbar">
+        <button class="start-button">
+            <i class="fas fa-play"></i>
+            Start
+        </button>
+        <div class="time" id="time">00:00:00</div>
+    </div>
+    
+    <div class="window" id="appWindow">
+        <div class="window-header">
+            <div class="window-title" id="windowTitle">App</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('appWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('appWindow')"></div>
+                <div class="window-control close" onclick="closeWindow()"></div>
+            </div>
+        </div>
+        <iframe class="window-content" id="windowContent" frameborder="0"></iframe>
+    </div>
+    
+    <!-- Photo App Window -->
+    <div class="window" id="photoAppWindow">
+        <div class="window-header">
+            <div class="window-title">Photo App</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('photoAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('photoAppWindow')"></div>
+                <div class="window-control close" onclick="closePhotoApp()"></div>
+            </div>
+        </div>
+        <div class="photo-app">
+            <div class="tab-bar">
+                <div class="tab active" onclick="switchTab('camera')">Camera</div>
+                <div class="tab" onclick="switchTab('gallery')">Gallery</div>
+            </div>
+            <div class="app-content">
+                <div id="camera-tab">
+                    <div class="camera-container">
+                        <video id="camera-view" autoplay playsinline></video>
+                    </div>
+                    <div class="settings-panel">
+                        <div class="setting-group">
+                            <h4>Exposure</h4>
+                            <div class="setting-option">
+                                <label>
+                                    Brightness: <span id="brightness-value">0</span>
+                                    <input type="range" id="brightness" min="-1" max="1" step="0.1" value="0">
+                                </label>
+                            </div>
+                            <div class="setting-option">
+                                <label>
+                                    Contrast: <span id="contrast-value">1</span>
+                                    <input type="range" id="contrast" min="0" max="2" step="0.1" value="1">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <h4>Color</h4>
+                            <div class="setting-option">
+                                <label>
+                                    Saturation: <span id="saturation-value">1</span>
+                                    <input type="range" id="saturation" min="0" max="2" step="0.1" value="1">
+                                </label>
+                            </div>
+                            <div class="setting-option">
+                                <label>
+                                    Temperature: <span id="temp-value">0</span>
+                                    <input type="range" id="temperature" min="-1" max="1" step="0.1" value="0">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <h4>Effects</h4>
+                            <div class="setting-option">
+                                <label>
+                                    <input type="checkbox" id="grayscale"> Grayscale
+                                </label>
+                            </div>
+                            <div class="setting-option">
+                                <label>
+                                    <input type="checkbox" id="sepia"> Sepia
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <h4>Focus</h4>
+                            <div class="setting-option">
+                                <label>
+                                    Blur: <span id="blur-value">0</span>
+                                    <input type="range" id="blur" min="0" max="5" step="0.1" value="0">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="camera-controls">
+                        <div class="capture-btn" id="capture-btn"></div>
+                    </div>
+                </div>
+                <div class="gallery" id="gallery-tab">
+                    <!-- Photos will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Zomato App Window -->
+    <div class="window" id="zomatoAppWindow">
+        <div class="window-header">
+            <div class="window-title">Zomato</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('zomatoAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('zomatoAppWindow')"></div>
+                <div class="window-control close" onclick="closeZomatoApp()"></div>
+            </div>
+        </div>
+        <div class="zomato-app">
+            <div class="zomato-header">
+                Zomato Food Delivery
+            </div>
+            <div class="zomato-search">
+                <input type="text" placeholder="Search for restaurants or cuisines">
+            </div>
+            <div class="restaurant-list" id="restaurantList">
+                <!-- Restaurants will be added here dynamically -->
+            </div>
+        </div>
+        
+        <!-- Order Screen (hidden by default) -->
+        <div class="order-screen" id="orderScreen">
+            <div class="order-header">
+                Your Order
+            </div>
+            <div class="order-restaurant" id="orderRestaurant">
+                <img src="" alt="Restaurant">
+                <div>
+                    <div class="restaurant-name" id="orderRestaurantName"></div>
+                    <div class="restaurant-info">
+                        <span class="restaurant-rating" id="orderRestaurantRating"></span>
+                        <span id="orderRestaurantDistance"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="order-items" id="orderItems">
+                <!-- Order items will be added here dynamically -->
+            </div>
+            <div class="order-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₹0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span id="deliveryFee">₹30</span>
+                </div>
+                <div class="summary-row">
+                    <span>Taxes</span>
+                    <span id="taxes">₹0</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total</span>
+                    <span id="total">₹30</span>
+                </div>
+                <button class="checkout-btn" onclick="checkoutOrder()">PROCEED TO PAYMENT</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- GPay App Window -->
+    <div class="window" id="gpayAppWindow">
+        <div class="window-header">
+            <div class="window-title">GPay</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('gpayAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('gpayAppWindow')"></div>
+                <div class="window-control close" onclick="closeGPayApp()"></div>
+            </div>
+        </div>
+        <div class="gpay-app">
+            <div class="gpay-header">
+                Google Pay
+            </div>
+            <div class="gpay-balance">
+                <div class="balance-label">Available Balance</div>
+                <div class="balance-amount">₹5,284.50</div>
+                <div class="balance-label">Account: user@example.com</div>
+            </div>
+            <div class="gpay-actions">
+                <div class="gpay-action" onclick="showPaymentScreen()">
+                    <i class="fas fa-rupee-sign"></i>
+                    <span>Pay</span>
+                </div>
+                <div class="gpay-action">
+                    <i class="fas fa-qrcode"></i>
+                    <span>Scan</span>
+                </div>
+                <div class="gpay-action">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Request</span>
+                </div>
+            </div>
+            <div class="gpay-transactions">
+                <div class="transaction">
+                    <div class="transaction-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">Zomato Food Order</div>
+                        <div class="transaction-info">Today, 12:45 PM</div>
+                    </div>
+                    <div class="transaction-amount">-₹425.00</div>
+                </div>
+                <div class="transaction">
+                    <div class="transaction-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">Starbucks</div>
+                        <div class="transaction-info">Yesterday, 5:30 PM</div>
+                    </div>
+                    <div class="transaction-amount">-₹210.00</div>
+                </div>
+                <div class="transaction">
+                    <div class="transaction-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">Salary Credit</div>
+                        <div class="transaction-info">Jun 1, 10:00 AM</div>
+                    </div>
+                    <div class="transaction-amount">+₹45,000.00</div>
+                </div>
+                <div class="transaction">
+                    <div class="transaction-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">Netflix Subscription</div>
+                        <div class="transaction-info">May 30, 8:00 AM</div>
+                    </div>
+                    <div class="transaction-amount">-₹649.00</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment Screen (hidden by default) -->
+        <div class="payment-screen" id="paymentScreen">
+            <div class="payment-header">
+                Make Payment
+            </div>
+            <div class="payment-amount" id="paymentAmount">
+                ₹0
+            </div>
+            <div class="payment-recipient" id="paymentRecipient">
+                <div class="recipient-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div>
+                    <div class="transaction-title">Zomato</div>
+                    <div class="transaction-info">Food Delivery</div>
+                </div>
+            </div>
+            <div class="payment-methods">
+                <div class="payment-method selected" onclick="selectPaymentMethod(this)">
+                    <div class="method-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">HDFC Bank</div>
+                        <div class="transaction-info">•••• 4567</div>
+                    </div>
+                    <div class="method-selected">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <div class="payment-method" onclick="selectPaymentMethod(this)">
+                    <div class="method-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">ICICI Bank</div>
+                        <div class="transaction-info">•••• 8910</div>
+                    </div>
+                    <div class="method-selected">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <div class="payment-method" onclick="selectPaymentMethod(this)">
+                    <div class="method-icon">
+                        <i class="fab fa-google-pay"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">GPay Balance</div>
+                        <div class="transaction-info">₹5,284.50 available</div>
+                    </div>
+                    <div class="method-selected">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+            <button class="pay-button" onclick="processPayment()">PAY NOW</button>
+        </div>
+        
+        <!-- Success Screen (hidden by default) -->
+        <div class="success-screen" id="successScreen">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="success-title">
+                Payment Successful!
+            </div>
+            <div class="success-message">
+                Your payment of <span id="successAmount">₹0</span> to <span id="successRecipient">Zomato</span> has been completed successfully.
+            </div>
+            <button class="done-button" onclick="paymentDone()">DONE</button>
+        </div>
+    </div>
+    
+    <!-- Photo Viewer -->
+    <div class="viewer" id="photo-viewer">
+        <img class="viewer-img" id="viewer-image" src="">
+        <div class="viewer-controls">
+            <button class="viewer-btn" onclick="deletePhoto()">Delete</button>
+            <button class="viewer-btn" onclick="closeViewer()">Close</button>
+            <button class="viewer-btn" onclick="downloadPhoto()">Download</button>
+        </div>
+    </div>
+    
+    <button class="back-button" id="backButton" onclick="closeWindow()">
+        <i class="fas fa-arrow-left"></i> Back to Desktop
+    </button>
+    
+    <script>
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.width = `${Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.setProperty('--duration', `${2 + Math.random() * 3}s`);
+            starsContainer.appendChild(star);
+        }
+        
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('time').textContent = timeString;
+        }
+        
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // Window functions
+        function openApp(name, url) {
+            document.getElementById('windowTitle').textContent = name;
+            document.getElementById('windowContent').src = url;
+            document.getElementById('appWindow').style.display = 'flex';
+            document.getElementById('backButton').style.display = 'block';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('appWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+        }
+        
+        function closeWindow() {
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('windowContent').src = '';
+            document.getElementById('backButton').style.display = 'none';
+        }
+        
+        function openPhotoApp() {
+            document.getElementById('photoAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            initCamera();
+            loadGallery();
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('photoAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+        }
+        
+        function closePhotoApp() {
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+            stopCamera();
+        }
+        
+        function openZomatoApp() {
+            document.getElementById('zomatoAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            loadRestaurants();
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('zomatoAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+            
+            // Show main screen (hide order screen)
+            document.querySelector('.zomato-app').style.display = 'flex';
+            document.getElementById('orderScreen').style.display = 'none';
+        }
+        
+        function closeZomatoApp() {
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+        }
+        
+        function openGPayApp() {
+            document.getElementById('gpayAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('gpayAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+            
+            // Show main screen (hide payment screens)
+            document.querySelector('.gpay-app').style.display = 'flex';
+            document.getElementById('paymentScreen').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'none';
+        }
+        
+        function closeGPayApp() {
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+        }
+        
+        function minimizeWindow(windowId) {
+            document.getElementById(windowId).style.display = 'none';
+        }
+        
+        function toggleMaximize(windowId) {
+            const window = document.getElementById(windowId);
+            window.classList.toggle('maximized');
+            
+            if (window.classList.contains('maximized')) {
+                // Save current position and size before maximizing
+                window.dataset.prevWidth = window.style.width;
+                window.dataset.prevHeight = window.style.height;
+                window.dataset.prevTop = window.style.top;
+                window.dataset.prevLeft = window.style.left;
+                window.dataset.prevTransform = window.style.transform;
+            } else {
+                // Restore previous size and position
+                window.style.width = window.dataset.prevWidth || '80%';
+                window.style.height = window.dataset.prevHeight || '80%';
+                window.style.top = window.dataset.prevTop || '50%';
+                window.style.left = window.dataset.prevLeft || '50%';
+                window.style.transform = window.dataset.prevTransform || 'translate(-50%, -50%)';
+            }
+        }
+        
+        // Make window draggable
+        const windowHeaders = document.querySelectorAll('.window-header');
+        const windows = document.querySelectorAll('.window');
+        
+        windowHeaders.forEach((header, index) => {
+            let isDragging = false;
+            let offsetX, offsetY;
+            
+            header.addEventListener('mousedown', (e) => {
+                if (windows[index].classList.contains('maximized')) return;
+                
+                isDragging = true;
+                offsetX = e.clientX - windows[index].getBoundingClientRect().left;
+                offsetY = e.clientY - windows[index].getBoundingClientRect().top;
+                windows[index].style.cursor = 'grabbing';
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                windows[index].style.left = `${e.clientX - offsetX}px`;
+                windows[index].style.top = `${e.clientY - offsetY}px`;
+                windows[index].style.transform = 'none';
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                windows[index].style.cursor = 'default';
+            });
+        });
+        
+        // Photo App Functionality
+        let stream = null;
+        let currentPhotoId = null;
+        const photos = JSON.parse(localStorage.getItem('photos') || '[]');
+        
+        function initCamera() {
+            const cameraView = document.getElementById('camera-view');
+            
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(mediaStream) {
+                        stream = mediaStream;
+                        cameraView.srcObject = mediaStream;
+                        applyFilters();
+                    })
+                    .catch(function(error) {
+                        console.error("Camera error: ", error);
+                        alert("Could not access the camera. Please check permissions.");
+                    });
+            } else {
+                alert("Camera API not supported in this browser.");
+            }
+        }
+        
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+        }
+        
+        function applyFilters() {
+            const cameraView = document.getElementById('camera-view');
+            const brightness = parseFloat(document.getElementById('brightness').value);
+            const contrast = parseFloat(document.getElementById('contrast').value);
+            const saturation = parseFloat(document.getElementById('saturation').value);
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const blur = parseFloat(document.getElementById('blur').value);
+            const grayscale = document.getElementById('grayscale').checked;
+            const sepia = document.getElementById('sepia').checked;
+            
+            let filter = `
+                brightness(${1 + brightness})
+                contrast(${contrast})
+                saturate(${saturation})
+                blur(${blur}px)
+            `;
+            
+            if (grayscale) filter += ' grayscale(1)';
+            if (sepia) filter += ' sepia(1)';
+            
+            // Temperature adjustment (simplified)
+            if (temperature > 0) {
+                filter += ` sepia(${temperature}) hue-rotate(${temperature * 30}deg)`;
+            } else if (temperature < 0) {
+                filter += ` sepia(${-temperature}) hue-rotate(${temperature * 30 + 180}deg)`;
+            }
+            
+            cameraView.style.filter = filter;
+        }
+        
+        function updateSettingValue(elementId, valueElementId) {
+            const value = document.getElementById(elementId).value;
+            document.getElementById(valueElementId).textContent = value;
+            applyFilters();
+        }
+        
+        // Setup event listeners for camera settings
+        document.getElementById('brightness').addEventListener('input', () => updateSettingValue('brightness', 'brightness-value'));
+        document.getElementById('contrast').addEventListener('input', () => updateSettingValue('contrast', 'contrast-value'));
+        document.getElementById('saturation').addEventListener('input', () => updateSettingValue('saturation', 'saturation-value'));
+        document.getElementById('temperature').addEventListener('input', () => updateSettingValue('temperature', 'temp-value'));
+        document.getElementById('blur').addEventListener('input', () => updateSettingValue('blur', 'blur-value'));
+        document.getElementById('grayscale').addEventListener('change', applyFilters);
+        document.getElementById('sepia').addEventListener('change', applyFilters);
+        
+        // Capture photo
+        document.getElementById('capture-btn').addEventListener('click', function() {
+            const cameraView = document.getElementById('camera-view');
+            const canvas = document.createElement('canvas');
+            canvas.width = cameraView.videoWidth;
+            canvas.height = cameraView.videoHeight;
+            const ctx = canvas.getContext('2d');
+            
+            // Apply current filters to the captured image
+            ctx.filter = cameraView.style.filter;
+            ctx.drawImage(cameraView, 0, 0, canvas.width, canvas.height);
+            
+            const photoData = canvas.toDataURL('image/png');
+            const photoId = Date.now();
+            
+            photos.push({
+                id: photoId,
+                data: photoData,
+                timestamp: new Date().toLocaleString(),
+                settings: getCurrentSettings()
+            });
+            
+            savePhotos();
+            loadGallery();
+            
+            // Show a quick flash effect
+            const flash = document.createElement('div');
+            flash.style.position = 'absolute';
+            flash.style.top = '0';
+            flash.style.left = '0';
+            flash.style.width = '100%';
+            flash.style.height = '100%';
+            flash.style.backgroundColor = 'white';
+            flash.style.opacity = '0.8';
+            flash.style.zIndex = '20';
+            document.querySelector('.camera-container').appendChild(flash);
+            
+            setTimeout(() => {
+                flash.style.transition = 'opacity 0.3s';
+                flash.style.opacity = '0';
+                setTimeout(() => flash.remove(), 300);
+            }, 50);
+        });
+        
+        function getCurrentSettings() {
+            return {
+                brightness: document.getElementById('brightness').value,
+                contrast: document.getElementById('contrast').value,
+                saturation: document.getElementById('saturation').value,
+                temperature: document.getElementById('temperature').value,
+                blur: document.getElementById('blur').value,
+                grayscale: document.getElementById('grayscale').checked,
+                sepia: document.getElementById('sepia').checked
+            };
+        }
+        
+        function savePhotos() {
+            localStorage.setItem('photos', JSON.stringify(photos));
+        }
+        
+        function loadGallery() {
+            const gallery = document.getElementById('gallery-tab');
+            gallery.innerHTML = '';
+            
+            if (photos.length === 0) {
+                gallery.innerHTML = '<p style="color: #aaa; text-align: center; width: 100%;">No photos yet. Capture some using the camera!</p>';
+                return;
+            }
+            
+            photos.forEach(photo => {
+                const img = document.createElement('img');
+                img.src = photo.data;
+                img.className = 'photo-thumbnail';
+                img.dataset.id = photo.id;
+                img.addEventListener('click', () => viewPhoto(photo.id));
+                gallery.appendChild(img);
+            });
+        }
+        
+        function viewPhoto(id) {
+            const photo = photos.find(p => p.id == id);
+            if (photo) {
+                document.getElementById('viewer-image').src = photo.data;
+                document.getElementById('photo-viewer').style.display = 'flex';
+                currentPhotoId = id;
+            }
+        }
+        
+        function closeViewer() {
+            document.getElementById('photo-viewer').style.display = 'none';
+            currentPhotoId = null;
+        }
+        
+        function deletePhoto() {
+            if (currentPhotoId) {
+                const index = photos.findIndex(p => p.id == currentPhotoId);
+                if (index !== -1) {
+                    photos.splice(index, 1);
+                    savePhotos();
+                    loadGallery();
+                    closeViewer();
+                }
+            }
+        }
+        
+        function downloadPhoto() {
+            if (currentPhotoId) {
+                const photo = photos.find(p => p.id == currentPhotoId);
+                if (photo) {
+                    const link = document.createElement('a');
+                    link.href = photo.data;
+                    link.download = `photo-${currentPhotoId}.png`;
+                    link.click();
+                }
+            }
+        }
+        
+        function switchTab(tabName) {
+            document.getElementById('camera-tab').style.display = tabName === 'camera' ? 'block' : 'none';
+            document.getElementById('gallery-tab').style.display = tabName === 'gallery' ? 'flex' : 'none';
+            
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            if (tabName === 'camera') {
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+            } else {
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+            }
+        }
+        
+        // Zomato App Functionality
+        const restaurants = [
+            {
+                id: 1,
+                name: "Burger King",
+                image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: "4.2 ★",
+                distance: "1.2 km",
+                deliveryTime: "25-35 min",
+                cuisines: ["Burgers", "American", "Fast Food"],
+                items: [
+                    { id: 101, name: "Whopper Burger", price: 199, quantity: 0 },
+                    { id: 102, name: "Chicken Fries", price: 149, quantity: 0 },
+                    { id: 103, name: "Veggie Burger", price: 159, quantity: 0 },
+                    { id: 104, name: "Onion Rings", price: 99, quantity: 0 },
+                    { id: 105, name: "Chocolate Shake", price: 129, quantity: 0 }
+                ]
+            },
+            {
+                id: 2,
+                name: "Domino's Pizza",
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: "4.0 ★",
+                distance: "0.8 km",
+                deliveryTime: "20-30 min",
+                cuisines: ["Pizza", "Italian", "Fast Food"],
+                items: [
+                    { id: 201, name: "Margherita Pizza", price: 199, quantity: 0 },
+                    { id: 202, name: "Pepperoni Pizza", price: 299, quantity: 0 },
+                    { id: 203, name: "Veggie Pizza", price: 249, quantity: 0 },
+                    { id: 204, name: "Garlic Bread", price: 99, quantity: 0 },
+                    { id: 205, name: "Choco Lava Cake", price: 129, quantity: 0 }
+                ]
+            },
+            {
+                id: 3,
+                name: "McDonald's",
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: "4.1 ★",
+                distance: "1.5 km",
+                deliveryTime: "30-40 min",
+                cuisines: ["Burgers", "American", "Fast Food"],
+                items: [
+                    { id: 301, name: "Big Mac", price: 179, quantity: 0 },
+                    { id: 302, name: "McChicken", price: 149, quantity: 0 },
+                    { id: 303, name: "French Fries", price: 99, quantity: 0 },
+                    { id: 304, name: "McFlurry", price: 119, quantity: 0 },
+                    { id: 305, name: "Apple Pie", price: 59, quantity: 0 }
+                ]
+            },
+            {
+                id: 4,
+                name: "Subway",
+                image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: "4.3 ★",
+                distance: "1.8 km",
+                deliveryTime: "35-45 min",
+                cuisines: ["Sandwiches", "Salads", "Healthy"],
+                items: [
+                    { id: 401, name: "Veggie Delite", price: 149, quantity: 0 },
+                    { id: 402, name: "Chicken Teriyaki", price: 199, quantity: 0 },
+                    { id: 403, name: "Tuna Sub", price: 229, quantity: 0 },
+                    { id: 404, name: "Cookies (Pack of 3)", price: 99, quantity: 0 },
+                    { id: 405, name: "Chips", price: 49, quantity: 0 }
+                ]
+            },
+            {
+                id: 5,
+                name: "KFC",
+                image: "https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                rating: "4.0 ★",
+                distance: "2.0 km",
+                deliveryTime: "40-50 min",
+                cuisines: ["Fried Chicken", "American", "Fast Food"],
+                items: [
+                    { id: 501, name: "Chicken Bucket", price: 399, quantity: 0 },
+                    { id: 502, name: "Zinger Burger", price: 179, quantity: 0 },
+                    { id: 503, name: "Popcorn Chicken", price: 149, quantity: 0 },
+                    { id: 504, name: "Coleslaw", price: 79, quantity: 0 },
+                    { id: 505, name: "Pepsi", price: 59, quantity: 0 }
+                ]
+            }
+        ];
+        
+        let currentRestaurant = null;
+        let currentOrder = [];
+        
+        function loadRestaurants() {
+            const restaurantList = document.getElementById('restaurantList');
+            restaurantList.innerHTML = '';
+            
+            restaurants.forEach(restaurant => {
+                const card = document.createElement('div');
+                card.className = 'restaurant-card';
+                card.dataset.id = restaurant.id;
+                
+                card.innerHTML = `
+                    <img src="${restaurant.image}" class="restaurant-image" alt="${restaurant.name}">
+                    <div class="restaurant-details">
+                        <div class="restaurant-name">${restaurant.name}</div>
+                        <div class="restaurant-info">
+                            <span class="restaurant-rating">${restaurant.rating}</span>
+                            <span>${restaurant.distance} • ${restaurant.deliveryTime}</span>
+                        </div>
+                        <div class="restaurant-cuisine">${restaurant.cuisines.join(', ')}</div>
+                        <button class="order-btn" onclick="startOrder(${restaurant.id})">ORDER NOW</button>
+                    </div>
+                `;
+                
+                restaurantList.appendChild(card);
+            });
+        }
+        
+        function startOrder(restaurantId) {
+            currentRestaurant = restaurants.find(r => r.id == restaurantId);
+            if (!currentRestaurant) return;
+            
+            // Show order screen
+            document.querySelector('.zomato-app').style.display = 'none';
+            document.getElementById('orderScreen').style.display = 'flex';
+            
+            // Set restaurant info
+            document.getElementById('orderRestaurant').querySelector('img').src = currentRestaurant.image;
+            document.getElementById('orderRestaurantName').textContent = currentRestaurant.name;
+            document.getElementById('orderRestaurantRating').textContent = currentRestaurant.rating;
+            document.getElementById('orderRestaurantDistance').textContent = `${currentRestaurant.distance} • ${currentRestaurant.deliveryTime}`;
+            
+            // Load items
+            const orderItems = document.getElementById('orderItems');
+            orderItems.innerHTML = '';
+            
+            currentRestaurant.items.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'order-item';
+                itemElement.dataset.id = item.id;
+                
+                itemElement.innerHTML = `
+                    <div>
+                        <div class="transaction-title">${item.name}</div>
+                        <div class="transaction-info">₹${item.price}</div>
+                    </div>
+                    <div class="item-controls">
+                        <div class="item-control" onclick="decreaseQuantity(${item.id})">-</div>
+                        <span id="quantity-${item.id}">0</span>
+                        <div class="item-control" onclick="increaseQuantity(${item.id})">+</div>
+                    </div>
+                `;
+                
+                orderItems.appendChild(itemElement);
+            });
+            
+            updateOrderSummary();
+        }
+        
+        function increaseQuantity(itemId) {
+            const item = currentRestaurant.items.find(i => i.id == itemId);
+            if (item) {
+                item.quantity++;
+                document.getElementById(`quantity-${itemId}`).textContent = item.quantity;
+                updateOrderSummary();
+            }
+        }
+        
+        function decreaseQuantity(itemId) {
+            const item = currentRestaurant.items.find(i => i.id == itemId);
+            if (item && item.quantity > 0) {
+                item.quantity--;
+                document.getElementById(`quantity-${itemId}`).textContent = item.quantity;
+                updateOrderSummary();
+            }
+        }
+        
+        function updateOrderSummary() {
+            let subtotal = 0;
+            currentRestaurant.items.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            
+            const taxes = subtotal * 0.05; // 5% tax
+            const total = subtotal + taxes + 30; // 30 delivery fee
+            
+            document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('taxes').textContent = `₹${taxes.toFixed(2)}`;
+            document.getElementById('total').textContent = `₹${total.toFixed(2)}`;
+        }
+        
+        function checkoutOrder() {
+            // Collect ordered items
+            currentOrder = currentRestaurant.items.filter(item => item.quantity > 0);
+            
+            if (currentOrder.length === 0) {
+                alert("Please add items to your order before checkout");
+                return;
+            }
+            
+            // Calculate total
+            let subtotal = 0;
+            currentOrder.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            const taxes = subtotal * 0.05;
+            const total = subtotal + taxes + 30;
+            
+            // Open GPay app with payment details
+            openGPayApp();
+            
+            // Set payment details
+            document.getElementById('paymentAmount').textContent = `₹${total.toFixed(2)}`;
+            document.getElementById('successAmount').textContent = `₹${total.toFixed(2)}`;
+            
+            // Show payment screen
+            document.querySelector('.gpay-app').style.display = 'none';
+            document.getElementById('paymentScreen').style.display = 'flex';
+        }
+        
+        // GPay App Functionality
+        function showPaymentScreen() {
+            document.querySelector('.gpay-app').style.display = 'none';
+            document.getElementById('paymentScreen').style.display = 'flex';
+            document.getElementById('paymentAmount').textContent = '₹0';
+        }
+        
+        function selectPaymentMethod(element) {
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+        
+        function processPayment() {
+            const amount = document.getElementById('paymentAmount').textContent;
+            if (amount === '₹0') {
+                alert("Please enter a valid amount");
+                return;
+            }
+            
+            // Show success screen
+            document.getElementById('paymentScreen').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'flex';
+        }
+        
+        function paymentDone() {
+            // Close GPay app
+            closeGPayApp();
+            
+            // Reset order quantities
+            if (currentRestaurant) {
+                currentRestaurant.items.forEach(item => {
+                    item.quantity = 0;
+                });
+            }
+            
+            // Show Zomato main screen
+            openZomatoApp();
+        }
+    </script>
+</body>
+</html>
