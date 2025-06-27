@@ -790,6 +790,156 @@
             font-weight: bold;
             cursor: pointer;
         }
+        
+        /* Bank Connection Styles */
+        .bank-connection {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            background-color: white;
+            color: #333;
+        }
+        
+        .bank-header {
+            padding: 15px;
+            background-color: #4285f4;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .bank-form {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .connect-button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .bank-list {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .bank-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        .bank-item img {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .bank-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* OTP Verification Styles */
+        .otp-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background-color: white;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .otp-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #fbbc05;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .otp-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .otp-message {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .otp-input {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .otp-input input {
+            width: 40px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .verify-button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .resend-otp {
+            color: #4285f4;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1023,9 +1173,9 @@
                     <i class="fas fa-rupee-sign"></i>
                     <span>Pay</span>
                 </div>
-                <div class="gpay-action">
-                    <i class="fas fa-qrcode"></i>
-                    <span>Scan</span>
+                <div class="gpay-action" onclick="showBankConnection()">
+                    <i class="fas fa-university"></i>
+                    <span>Bank</span>
                 </div>
                 <div class="gpay-action">
                     <i class="fas fa-user-friends"></i>
@@ -1132,6 +1282,86 @@
                 </div>
             </div>
             <button class="pay-button" onclick="processPayment()">PAY NOW</button>
+        </div>
+        
+        <!-- Bank Connection Screen (hidden by default) -->
+        <div class="bank-connection" id="bankConnection">
+            <div class="bank-header">
+                Connect Bank Account
+            </div>
+            <div class="bank-form">
+                <div class="form-group">
+                    <label for="bank-name">Select Bank</label>
+                    <select id="bank-name">
+                        <option value="">-- Select Bank --</option>
+                        <option value="hdfc">HDFC Bank</option>
+                        <option value="icici">ICICI Bank</option>
+                        <option value="sbi">State Bank of India</option>
+                        <option value="axis">Axis Bank</option>
+                        <option value="kotak">Kotak Mahindra Bank</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="account-number">Account Number</label>
+                    <input type="text" id="account-number" placeholder="Enter account number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ifsc-code">IFSC Code</label>
+                    <input type="text" id="ifsc-code" placeholder="Enter IFSC code">
+                </div>
+                
+                <div class="form-group">
+                    <label for="account-holder">Account Holder Name</label>
+                    <input type="text" id="account-holder" placeholder="Enter account holder name">
+                </div>
+                
+                <button class="connect-button" onclick="verifyBankDetails()">CONNECT BANK</button>
+                
+                <div class="bank-list">
+                    <h4>Connected Banks</h4>
+                    <div class="bank-item" onclick="selectConnectedBank('hdfc')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/HDFC_Bank_Logo.svg/1200px-HDFC_Bank_Logo.svg.png" alt="HDFC Bank">
+                        <div>
+                            <div class="transaction-title">HDFC Bank</div>
+                            <div class="transaction-info">•••• 4567</div>
+                        </div>
+                    </div>
+                    <div class="bank-item" onclick="selectConnectedBank('icici')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/ICICI_Bank_Logo.svg/1200px-ICICI_Bank_Logo.svg.png" alt="ICICI Bank">
+                        <div>
+                            <div class="transaction-title">ICICI Bank</div>
+                            <div class="transaction-info">•••• 8910</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- OTP Verification Screen (hidden by default) -->
+        <div class="otp-screen" id="otpScreen">
+            <div class="otp-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <div class="otp-title">
+                Verify Your Account
+            </div>
+            <div class="otp-message">
+                We've sent a 6-digit OTP to your registered mobile number ending with ••••7890
+            </div>
+            <div class="otp-input">
+                <input type="text" maxlength="1" oninput="moveToNext(this, 1)">
+                <input type="text" maxlength="1" oninput="moveToNext(this, 2)">
+                <input type="text" maxlength="1" oninput="moveToNext(this, 3)">
+                <input type="text" maxlength="1" oninput="moveToNext(this, 4)">
+                <input type="text" maxlength="1" oninput="moveToNext(this, 5)">
+                <input type="text" maxlength="1" oninput="moveToNext(this, 6)">
+            </div>
+            <button class="verify-button" onclick="verifyOTP()">VERIFY</button>
+            <div class="resend-otp" onclick="resendOTP()">
+                Didn't receive OTP? Resend
+            </div>
         </div>
         
         <!-- Success Screen (hidden by default) -->
@@ -1281,9 +1511,11 @@
             window.style.transform = 'translate(-50%, -50%)';
             window.classList.remove('maximized');
             
-            // Show main screen (hide payment screens)
+            // Show main screen (hide other screens)
             document.querySelector('.gpay-app').style.display = 'flex';
             document.getElementById('paymentScreen').style.display = 'none';
+            document.getElementById('bankConnection').style.display = 'none';
+            document.getElementById('otpScreen').style.display = 'none';
             document.getElementById('successScreen').style.display = 'none';
         }
         
@@ -1779,11 +2011,60 @@
             document.getElementById('paymentAmount').textContent = '₹0';
         }
         
+        function showBankConnection() {
+            document.querySelector('.gpay-app').style.display = 'none';
+            document.getElementById('bankConnection').style.display = 'flex';
+        }
+        
         function selectPaymentMethod(element) {
             document.querySelectorAll('.payment-method').forEach(method => {
                 method.classList.remove('selected');
             });
             element.classList.add('selected');
+        }
+        
+        function selectConnectedBank(bankId) {
+            // This would normally connect to the selected bank account
+            alert(`Selected ${bankId} bank account for payment`);
+        }
+        
+        function verifyBankDetails() {
+            const bankName = document.getElementById('bank-name').value;
+            const accountNumber = document.getElementById('account-number').value;
+            const ifscCode = document.getElementById('ifsc-code').value;
+            const accountHolder = document.getElementById('account-holder').value;
+            
+            if (!bankName || !accountNumber || !ifscCode || !accountHolder) {
+                alert("Please fill in all bank details");
+                return;
+            }
+            
+            // Show OTP verification screen
+            document.getElementById('bankConnection').style.display = 'none';
+            document.getElementById('otpScreen').style.display = 'flex';
+        }
+        
+        function moveToNext(input, nextIndex) {
+            if (input.value.length === 1) {
+                const nextInput = document.querySelector(`.otp-input input:nth-child(${nextIndex + 1})`);
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+        }
+        
+        function verifyOTP() {
+            // In a real app, this would verify the OTP with the bank
+            alert("Bank account connected successfully!");
+            
+            // Show success and return to main screen
+            document.getElementById('otpScreen').style.display = 'none';
+            document.querySelector('.gpay-app').style.display = 'flex';
+        }
+        
+        function resendOTP() {
+            // In a real app, this would resend the OTP
+            alert("OTP has been resent to your registered mobile number");
         }
         
         function processPayment() {
