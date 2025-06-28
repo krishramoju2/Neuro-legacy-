@@ -21,8 +21,16 @@
             position: relative;
         }
         
-        .desktop {
+        .desktop-container {
+            display: flex;
+            width: 200vw;
             height: calc(100vh - 40px);
+            transition: transform 0.5s ease;
+        }
+        
+        .desktop {
+            width: 100vw;
+            height: 100%;
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, 100px);
@@ -62,6 +70,24 @@
         .time {
             margin-left: auto;
             padding: 0 10px;
+        }
+        
+        .page-indicator {
+            display: flex;
+            gap: 5px;
+            margin-left: 20px;
+        }
+        
+        .page-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+        
+        .page-dot.active {
+            background-color: white;
         }
         
         .icon {
@@ -1317,50 +1343,642 @@
         .equalizer-bar:nth-child(3) { animation-delay: 0.4s; }
         .equalizer-bar:nth-child(4) { animation-delay: 0.6s; }
         .equalizer-bar:nth-child(5) { animation-delay: 0.8s; }
+        
+        /* Notes App Styles */
+        .notes-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .notes-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .notes-toolbar {
+            display: flex;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
+        }
+        
+        .tool-group {
+            display: flex;
+            margin-right: 15px;
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+        }
+        
+        .tool-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            background-color: white;
+            border: 1px solid #ddd;
+            margin: 0 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tool-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .tool-button.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .font-selector {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+        }
+        
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            border: none;
+            padding: 0;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .notes-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .notes-sidebar {
+            width: 250px;
+            background-color: white;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .notes-list {
+            list-style: none;
+        }
+        
+        .note-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .note-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .note-item.active {
+            background-color: #e3f2fd;
+            border-left: 3px solid #3498db;
+        }
+        
+        .note-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .note-preview {
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .add-note-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        
+        .note-editor {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .note-title-input {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            outline: none;
+        }
+        
+        .note-body {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.5;
+            overflow-y: auto;
+        }
+        
+        .calligraphy-mode .note-body {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            line-height: 1.8;
+        }
+        
+        .note-actions {
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .action-button {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .save-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        /* Weather App Styles */
+        .weather-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF);
+            color: white;
+        }
+        
+        .weather-header {
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .weather-search {
+            padding: 15px;
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .weather-search input {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .weather-search button {
+            background-color: #FFA500;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .weather-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .current-weather {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .weather-icon {
+            font-size: 80px;
+            margin: 10px 0;
+        }
+        
+        .temperature {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .weather-description {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .weather-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-card {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .detail-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .detail-label {
+            font-size: 14px;
+        }
+        
+        .forecast-container {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .forecast-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .forecast-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .forecast-item {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .forecast-day {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .forecast-icon {
+            font-size: 30px;
+            margin: 5px 0;
+        }
+        
+        .forecast-temp {
+            font-size: 18px;
+        }
+        
+        .rain-prediction {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .rain-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .rain-chart {
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+        
+        .rain-bar {
+            width: 30px;
+            background: linear-gradient(to top, #1E90FF, #87CEEB);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+        }
+        
+        .rain-bar::after {
+            content: attr(data-percent)'%';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+        }
+        
+        .rain-hour {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+        }
+        
+        .rain-summary {
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        /* Settings App Styles */
+        .settings-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .settings-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .settings-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .settings-section {
+            margin-bottom: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 15px;
+            background-color: #ecf0f1;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-info {
+            flex: 1;
+        }
+        
+        .setting-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .setting-description {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .setting-control {
+            margin-left: 15px;
+        }
+        
+        .theme-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+        }
+        
+        .theme-option {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .theme-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .theme-option.selected {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* Other Apps Placeholder Styles */
+        .placeholder-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f5f5f5;
+            color: #333;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .placeholder-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #7f8c8d;
+        }
+        
+        .placeholder-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .placeholder-message {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .placeholder-features {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+        
+        .placeholder-features li {
+            margin-bottom: 10px;
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="stars" id="stars"></div>
     
-    <div class="desktop">
-        <div class="icon" onclick="openApp('Stocks AI', 'https://krishramoju2.github.io/Stocks-/')">
-            <i class="fas fa-chart-line"></i>
-            <span>Stocks AI</span>
+    <div class="desktop-container" id="desktopContainer">
+        <!-- First Screen -->
+        <div class="desktop">
+            <div class="icon" onclick="openApp('Stocks AI', 'https://krishramoju2.github.io/Stocks-/')">
+                <i class="fas fa-chart-line"></i>
+                <span>Stocks AI</span>
+            </div>
+            
+            <div class="icon" onclick="openApp('Cyber Security', 'https://krishramoju2.github.io/Cybersecurity/')">
+                <i class="fas fa-shield-alt"></i>
+                <span>Cyber Security</span>
+            </div>
+            
+            <div class="icon" onclick="openApp('Space Explorer', 'https://krishramoju2.github.io/Space-/')">
+                <i class="fas fa-rocket"></i>
+                <span>Space Explorer</span>
+            </div>
+            
+            <div class="icon" onclick="openApp('Deep Sea', 'https://krishramoju2.github.io/Deep-sea/')">
+                <i class="fas fa-water"></i>
+                <span>Deep Sea</span>
+            </div>
+            
+            <div class="icon" onclick="openPhotoApp()">
+                <i class="fas fa-camera"></i>
+                <span>Photo App</span>
+            </div>
+            
+            <div class="icon" onclick="openZomatoApp()">
+                <i class="fas fa-utensils"></i>
+                <span>Zomato</span>
+            </div>
+            
+            <div class="icon" onclick="openGPayApp()">
+                <i class="fab fa-google-pay"></i>
+                <span>GPay</span>
+            </div>
+            
+            <div class="icon" onclick="openMusicApp()">
+                <i class="fas fa-music"></i>
+                <span>Music Player</span>
+            </div>
+            
+            <div class="icon" onclick="openNotesApp()">
+                <i class="fas fa-pen-fancy"></i>
+                <span>Calligraphy Notes</span>
+            </div>
+            
+            <div class="icon" onclick="openWeatherApp()">
+                <i class="fas fa-cloud-sun"></i>
+                <span>Weather Pro</span>
+            </div>
+            
+            <div class="icon" onclick="openSettingsApp()">
+                <i class="fas fa-cog"></i>
+                <span>App Settings</span>
+            </div>
         </div>
         
-        <div class="icon" onclick="openApp('Cyber Security', 'https://krishramoju2.github.io/Cybersecurity/')">
-            <i class="fas fa-shield-alt"></i>
-            <span>Cyber Security</span>
-        </div>
-        
-        <div class="icon" onclick="openApp('Space Explorer', 'https://krishramoju2.github.io/Space-/')">
-            <i class="fas fa-rocket"></i>
-            <span>Space Explorer</span>
-        </div>
-        
-        <div class="icon" onclick="openApp('Deep Sea', 'https://krishramoju2.github.io/Deep-sea/')">
-            <i class="fas fa-water"></i>
-            <span>Deep Sea</span>
-        </div>
-        
-        <div class="icon" onclick="openPhotoApp()">
-            <i class="fas fa-camera"></i>
-            <span>Photo App</span>
-        </div>
-        
-        <div class="icon" onclick="openZomatoApp()">
-            <i class="fas fa-utensils"></i>
-            <span>Zomato</span>
-        </div>
-        
-        <div class="icon" onclick="openGPayApp()">
-            <i class="fab fa-google-pay"></i>
-            <span>GPay</span>
-        </div>
-        
-        <div class="icon" onclick="openMusicApp()">
-            <i class="fas fa-music"></i>
-            <span>Music Player</span>
+        <!-- Second Screen -->
+        <div class="desktop">
+            <div class="icon" onclick="openPlaceholderApp('AI Fitness Coach', 'dumbbell', 'Personalized workout plans with AI analysis')">
+                <i class="fas fa-dumbbell"></i>
+                <span>AI Fitness</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Language Tutor', 'language', 'Learn any language with AI conversation practice')">
+                <i class="fas fa-language"></i>
+                <span>Language Tutor</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Smart Home', 'home', 'Control all your smart devices in one place')">
+                <i class="fas fa-home"></i>
+                <span>Smart Home</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Health Tracker', 'heartbeat', 'Monitor your health with AI insights')">
+                <i class="fas fa-heartbeat"></i>
+                <span>Health Tracker</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('AI Chef', 'utensils', 'Recipe suggestions based on ingredients')">
+                <i class="fas fa-utensils"></i>
+                <span>AI Chef</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Finance Planner', 'chart-pie', 'AI-powered financial planning and advice')">
+                <i class="fas fa-chart-pie"></i>
+                <span>Finance Planner</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Meditation Guide', 'spa', 'Personalized meditation and mindfulness')">
+                <i class="fas fa-spa"></i>
+                <span>Meditation Guide</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Travel Planner', 'plane', 'AI-powered travel itineraries')">
+                <i class="fas fa-plane"></i>
+                <span>Travel Planner</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Book Club', 'book', 'AI book recommendations and discussions')">
+                <i class="fas fa-book"></i>
+                <span>Book Club</span>
+            </div>
+            
+            <div class="icon" onclick="openPlaceholderApp('Code Editor', 'code', 'AI-assisted coding with real-time suggestions')">
+                <i class="fas fa-code"></i>
+                <span>Code Editor</span>
+            </div>
         </div>
     </div>
     
@@ -1369,9 +1987,14 @@
             <i class="fas fa-play"></i>
             Start
         </button>
+        <div class="page-indicator">
+            <div class="page-dot active" onclick="goToPage(0)"></div>
+            <div class="page-dot" onclick="goToPage(1)"></div>
+        </div>
         <div class="time" id="time">00:00:00</div>
     </div>
     
+    <!-- Main App Window -->
     <div class="window" id="appWindow">
         <div class="window-header">
             <div class="window-title" id="windowTitle">App</div>
@@ -1882,6 +2505,259 @@
         </div>
     </div>
     
+    <!-- Notes App Window -->
+    <div class="window" id="notesAppWindow">
+        <div class="window-header">
+            <div class="window-title">Calligraphy Notes</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('notesAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('notesAppWindow')"></div>
+                <div class="window-control close" onclick="closeNotesApp()"></div>
+            </div>
+        </div>
+        <div class="notes-app">
+            <div class="notes-header">
+                Calligraphy Notes
+            </div>
+            <div class="notes-toolbar">
+                <div class="tool-group">
+                    <button class="tool-button" onclick="formatText('bold')"><i class="fas fa-bold"></i></button>
+                    <button class="tool-button" onclick="formatText('italic')"><i class="fas fa-italic"></i></button>
+                    <button class="tool-button" onclick="formatText('underline')"><i class="fas fa-underline"></i></button>
+                </div>
+                <div class="tool-group">
+                    <select class="font-selector" onchange="changeFontFamily(this.value)">
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="'Times New Roman', serif">Times New Roman</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                        <option value="'Dancing Script', cursive">Calligraphy</option>
+                        <option value="'Brush Script MT', cursive">Brush Script</option>
+                    </select>
+                </div>
+                <div class="tool-group">
+                    <input type="color" class="color-picker" value="#000000" onchange="changeTextColor(this.value)">
+                    <button class="tool-button" onclick="changeTextColor('#ff0000')" style="color: #ff0000;"><i class="fas fa-font"></i></button>
+                    <button class="tool-button" onclick="changeHighlightColor('#ffff00')" style="background-color: #ffff00;"><i class="fas fa-highlighter"></i></button>
+                </div>
+                <div class="tool-group">
+                    <button class="tool-button" onclick="insertBulletList()"><i class="fas fa-list-ul"></i></button>
+                    <button class="tool-button" onclick="insertNumberedList()"><i class="fas fa-list-ol"></i></button>
+                </div>
+                <div class="tool-group">
+                    <button class="tool-button" onclick="toggleCalligraphyMode()"><i class="fas fa-pen-fancy"></i></button>
+                </div>
+            </div>
+            <div class="notes-content">
+                <div class="notes-sidebar">
+                    <ul class="notes-list" id="notesList">
+                        <!-- Notes will be added here dynamically -->
+                    </ul>
+                    <button class="add-note-btn" onclick="addNewNote()">
+                        <i class="fas fa-plus"></i> New Note
+                    </button>
+                </div>
+                <div class="note-editor">
+                    <input type="text" class="note-title-input" id="noteTitleInput" placeholder="Note Title">
+                    <div class="note-body" id="noteBody" contenteditable="true" placeholder="Start writing your note here..."></div>
+                    <div class="note-actions">
+                        <button class="action-button delete-btn" onclick="deleteCurrentNote()">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <button class="action-button save-btn" onclick="saveCurrentNote()">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Weather App Window -->
+    <div class="window" id="weatherAppWindow">
+        <div class="window-header">
+            <div class="window-title">Weather Pro</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('weatherAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('weatherAppWindow')"></div>
+                <div class="window-control close" onclick="closeWeatherApp()"></div>
+            </div>
+        </div>
+        <div class="weather-app">
+            <div class="weather-header">
+                Weather Pro
+            </div>
+            <div class="weather-search">
+                <input type="text" id="weatherLocation" placeholder="Enter city name">
+                <button onclick="getWeather()"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div class="weather-content">
+                <div class="current-weather">
+                    <div class="weather-icon" id="weatherIcon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="temperature" id="temperature">24°C</div>
+                    <div class="weather-description" id="weatherDescription">Sunny</div>
+                    <div id="location">New York, US</div>
+                </div>
+                <div class="weather-details">
+                    <div class="detail-card">
+                        <div class="detail-value" id="humidity">65%</div>
+                        <div class="detail-label">Humidity</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-value" id="windSpeed">12 km/h</div>
+                        <div class="detail-label">Wind Speed</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-value" id="pressure">1012 hPa</div>
+                        <div class="detail-label">Pressure</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-value" id="visibility">10 km</div>
+                        <div class="detail-label">Visibility</div>
+                    </div>
+                </div>
+                <div class="forecast-container">
+                    <div class="forecast-title">5-Day Forecast</div>
+                    <div class="forecast-list" id="forecastList">
+                        <!-- Forecast items will be added here dynamically -->
+                    </div>
+                </div>
+                <div class="rain-prediction">
+                    <div class="rain-title">Hourly Rain Prediction</div>
+                    <div class="rain-chart" id="rainChart">
+                        <!-- Rain prediction bars will be added here dynamically -->
+                    </div>
+                    <div class="rain-summary" id="rainSummary">
+                        Light rain expected around 3 PM (60% chance)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings App Window -->
+    <div class="window" id="settingsAppWindow">
+        <div class="window-header">
+            <div class="window-title">App Settings</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('settingsAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('settingsAppWindow')"></div>
+                <div class="window-control close" onclick="closeSettingsApp()"></div>
+            </div>
+        </div>
+        <div class="settings-app">
+            <div class="settings-header">
+                App Settings
+            </div>
+            <div class="settings-content">
+                <div class="settings-section">
+                    <div class="section-header">
+                        Appearance
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-title">Dark Mode</div>
+                            <div class="setting-description">Switch between light and dark theme</div>
+                        </div>
+                        <div class="setting-control">
+                            <label class="switch">
+                                <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-title">Desktop Background</div>
+                            <div class="setting-description">Choose your preferred background</div>
+                        </div>
+                    </div>
+                    <div class="theme-selector">
+                        <div class="theme-option" style="background: linear-gradient(135deg, #000428, #004e92);" onclick="changeBackground('linear-gradient(135deg, #000428, #004e92)')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);" onclick="changeBackground('linear-gradient(135deg, #0f2027, #203a43, #2c5364)')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #23074d, #cc5333);" onclick="changeBackground('linear-gradient(135deg, #23074d, #cc5333)')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #1a2980, #26d0ce);" onclick="changeBackground('linear-gradient(135deg, #1a2980, #26d0ce)')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #614385, #516395);" onclick="changeBackground('linear-gradient(135deg, #614385, #516395)')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #e53935, #e35d5b);" onclick="changeBackground('linear-gradient(135deg, #e53935, #e35d5b)')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #1d976c, #93f9b9);" onclick="changeBackground('linear-gradient(135deg, #1d976c, #93f9b9)')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #ff5e62, #ff9966);" onclick="changeBackground('linear-gradient(135deg, #ff5e62, #ff9966)')"></div>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <div class="section-header">
+                        Notifications
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-title">Enable Notifications</div>
+                            <div class="setting-description">Receive app notifications</div>
+                        </div>
+                        <div class="setting-control">
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-title">Notification Sound</div>
+                            <div class="setting-description">Play sound for notifications</div>
+                        </div>
+                        <div class="setting-control">
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <div class="section-header">
+                        System
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-title">Auto-update Apps</div>
+                            <div class="setting-description">Automatically update all apps</div>
+                        </div>
+                        <div class="setting-control">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-title">Storage</div>
+                            <div class="setting-description">15.2 GB used of 64 GB</div>
+                        </div>
+                        <div class="setting-control">
+                            <button class="action-button">Manage</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Placeholder App Window -->
+    <div class="window" id="placeholderAppWindow">
+        <div class="window-header">
+            <div class="window-title" id="placeholderTitle">App</div>
+            <div class="window-controls">
+                <div class="window-control minimize" onclick="minimizeWindow('placeholderAppWindow')"></div>
+                <div class="window-control maximize" onclick="toggleMaximize('placeholderAppWindow')"></div>
+                <div class="window-control close" onclick="closePlaceholderApp()"></div>
+            </div>
+        </div>
+        <div class="placeholder-app" id="placeholderContent">
+            <!-- Content will be added dynamically -->
+        </div>
+    </div>
+    
     <!-- Fullscreen Music Player -->
     <div class="fullscreen-player" id="fullscreenPlayer">
         <div class="close-fullscreen" onclick="closeFullscreenPlayer()">
@@ -1956,6 +2832,49 @@
         setInterval(updateTime, 1000);
         updateTime();
         
+        // Desktop navigation
+        let currentPage = 0;
+        
+        function goToPage(pageIndex) {
+            currentPage = pageIndex;
+            document.getElementById('desktopContainer').style.transform = `translateX(-${pageIndex * 100}vw)`;
+            
+            // Update page indicator
+            const dots = document.querySelectorAll('.page-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === pageIndex);
+            });
+        }
+        
+        // Handle swipe gestures for desktop navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+        
+        function handleSwipe() {
+            const threshold = 50; // Minimum swipe distance
+            
+            if (touchEndX < touchStartX - threshold) {
+                // Swipe left - go to next page
+                if (currentPage < 1) {
+                    goToPage(currentPage + 1);
+                }
+            } else if (touchEndX > touchStartX + threshold) {
+                // Swipe right - go to previous page
+                if (currentPage > 0) {
+                    goToPage(currentPage - 1);
+                }
+            }
+        }
+        
         // Window functions
         function openApp(name, url) {
             document.getElementById('windowTitle').textContent = name;
@@ -1966,6 +2885,10 @@
             document.getElementById('zomatoAppWindow').style.display = 'none';
             document.getElementById('gpayAppWindow').style.display = 'none';
             document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
             
             // Reset window position and size when opening
             const window = document.getElementById('appWindow');
@@ -1989,6 +2912,10 @@
             document.getElementById('zomatoAppWindow').style.display = 'none';
             document.getElementById('gpayAppWindow').style.display = 'none';
             document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'block';
             initCamera();
             loadGallery();
@@ -2015,6 +2942,10 @@
             document.getElementById('photoAppWindow').style.display = 'none';
             document.getElementById('gpayAppWindow').style.display = 'none';
             document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'block';
             loadRestaurants();
             
@@ -2043,6 +2974,10 @@
             document.getElementById('photoAppWindow').style.display = 'none';
             document.getElementById('zomatoAppWindow').style.display = 'none';
             document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'block';
             
             // Reset window position and size when opening
@@ -2073,6 +3008,10 @@
             document.getElementById('photoAppWindow').style.display = 'none';
             document.getElementById('zomatoAppWindow').style.display = 'none';
             document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'block';
             
             // Reset window position and size when opening
@@ -2092,6 +3031,144 @@
             document.getElementById('musicAppWindow').style.display = 'none';
             document.getElementById('backButton').style.display = 'none';
             stopMusic();
+        }
+        
+        function openNotesApp() {
+            document.getElementById('notesAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('notesAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+            
+            // Load notes
+            loadNotes();
+        }
+        
+        function closeNotesApp() {
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+            saveCurrentNote();
+        }
+        
+        function openWeatherApp() {
+            document.getElementById('weatherAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('weatherAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+            
+            // Load weather data
+            getWeather();
+        }
+        
+        function closeWeatherApp() {
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+        }
+        
+        function openSettingsApp() {
+            document.getElementById('settingsAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('placeholderAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('settingsAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+        }
+        
+        function closeSettingsApp() {
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+        }
+        
+        function openPlaceholderApp(title, icon, description) {
+            const placeholderContent = document.getElementById('placeholderContent');
+            placeholderContent.innerHTML = `
+                <div class="placeholder-icon">
+                    <i class="fas fa-${icon}"></i>
+                </div>
+                <div class="placeholder-title">${title}</div>
+                <div class="placeholder-message">Coming Soon - Advanced AI features launching next month</div>
+                <div class="placeholder-features">
+                    <h3>Why our ${title} is better:</h3>
+                    <ul>
+                        <li>AI-powered personalized recommendations</li>
+                        <li>Real-time analytics and insights</li>
+                        <li>Seamless integration with other apps</li>
+                        <li>Advanced customization options</li>
+                        <li>24/7 virtual assistant support</li>
+                    </ul>
+                </div>
+                <button class="action-button save-btn" onclick="closePlaceholderApp()">
+                    <i class="fas fa-check"></i> Got it!
+                </button>
+            `;
+            
+            document.getElementById('placeholderTitle').textContent = title;
+            document.getElementById('placeholderAppWindow').style.display = 'flex';
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('photoAppWindow').style.display = 'none';
+            document.getElementById('zomatoAppWindow').style.display = 'none';
+            document.getElementById('gpayAppWindow').style.display = 'none';
+            document.getElementById('musicAppWindow').style.display = 'none';
+            document.getElementById('notesAppWindow').style.display = 'none';
+            document.getElementById('weatherAppWindow').style.display = 'none';
+            document.getElementById('settingsAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'block';
+            
+            // Reset window position and size when opening
+            const window = document.getElementById('placeholderAppWindow');
+            window.style.width = '80%';
+            window.style.height = '80%';
+            window.style.top = '50%';
+            window.style.left = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
+            window.classList.remove('maximized');
+        }
+        
+        function closePlaceholderApp() {
+            document.getElementById('placeholderAppWindow').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
         }
         
         function minimizeWindow(windowId) {
@@ -3017,9 +4094,305 @@
         
         // Initialize volume
         changeVolume();
+        
+        // Notes App Functionality
+        let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+        let currentNoteId = null;
+        let isCalligraphyMode = false;
+        
+        function loadNotes() {
+            const notesList = document.getElementById('notesList');
+            notesList.innerHTML = '';
+            
+            if (notes.length === 0) {
+                notesList.innerHTML = '<p style="color: #666; text-align: center; padding: 10px;">No notes yet. Create one!</p>';
+                return;
+            }
+            
+            notes.forEach(note => {
+                const noteItem = document.createElement('li');
+                noteItem.className = 'note-item';
+                noteItem.dataset.id = note.id;
+                noteItem.onclick = () => loadNote(note.id);
+                
+                // Create preview text (remove HTML tags and limit length)
+                let previewText = note.content.replace(/<[^>]*>/g, '');
+                if (previewText.length > 50) {
+                    previewText = previewText.substring(0, 50) + '...';
+                }
+                
+                noteItem.innerHTML = `
+                    <div class="note-title">${note.title || 'Untitled Note'}</div>
+                    <div class="note-preview">${previewText || 'No content'}</div>
+                `;
+                
+                notesList.appendChild(noteItem);
+            });
+            
+            // Load the first note by default if none is selected
+            if (!currentNoteId && notes.length > 0) {
+                loadNote(notes[0].id);
+            }
+        }
+        
+        function loadNote(noteId) {
+            const note = notes.find(n => n.id == noteId);
+            if (!note) return;
+            
+            currentNoteId = note.id;
+            
+            // Update the UI
+            document.getElementById('noteTitleInput').value = note.title || '';
+            document.getElementById('noteBody').innerHTML = note.content || '';
+            
+            // Highlight the selected note in the sidebar
+            document.querySelectorAll('.note-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.id == noteId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+        
+        function addNewNote() {
+            const newNote = {
+                id: Date.now(),
+                title: '',
+                content: '',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            
+            notes.unshift(newNote);
+            saveNotes();
+            loadNotes();
+            loadNote(newNote.id);
+            
+            // Focus on the title input
+            document.getElementById('noteTitleInput').focus();
+        }
+        
+        function saveCurrentNote() {
+            if (!currentNoteId) return;
+            
+            const noteIndex = notes.findIndex(n => n.id == currentNoteId);
+            if (noteIndex === -1) return;
+            
+            notes[noteIndex].title = document.getElementById('noteTitleInput').value;
+            notes[noteIndex].content = document.getElementById('noteBody').innerHTML;
+            notes[noteIndex].updatedAt = new Date();
+            
+            saveNotes();
+            loadNotes(); // Refresh the list to show updated title/preview
+        }
+        
+        function deleteCurrentNote() {
+            if (!currentNoteId) return;
+            
+            if (confirm("Are you sure you want to delete this note?")) {
+                const noteIndex = notes.findIndex(n => n.id == currentNoteId);
+                if (noteIndex !== -1) {
+                    notes.splice(noteIndex, 1);
+                    saveNotes();
+                    loadNotes();
+                    
+                    // Clear the editor
+                    document.getElementById('noteTitleInput').value = '';
+                    document.getElementById('noteBody').innerHTML = '';
+                    currentNoteId = null;
+                }
+            }
+        }
+        
+        function saveNotes() {
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+        
+        // Text formatting functions
+        function formatText(format) {
+            const noteBody = document.getElementById('noteBody');
+            document.execCommand(format, false, null);
+            noteBody.focus();
+        }
+        
+        function changeFontFamily(font) {
+            const noteBody = document.getElementById('noteBody');
+            document.execCommand('fontName', false, font);
+            noteBody.focus();
+        }
+        
+        function changeTextColor(color) {
+            const noteBody = document.getElementById('noteBody');
+            document.execCommand('foreColor', false, color);
+            noteBody.focus();
+        }
+        
+        function changeHighlightColor(color) {
+            const noteBody = document.getElementById('noteBody');
+            document.execCommand('hiliteColor', false, color);
+            noteBody.focus();
+        }
+        
+        function insertBulletList() {
+            const noteBody = document.getElementById('noteBody');
+            document.execCommand('insertUnorderedList', false, null);
+            noteBody.focus();
+        }
+        
+        function insertNumberedList() {
+            const noteBody = document.getElementById('noteBody');
+            document.execCommand('insertOrderedList', false, null);
+            noteBody.focus();
+        }
+        
+        function toggleCalligraphyMode() {
+            const noteBody = document.getElementById('noteBody');
+            isCalligraphyMode = !isCalligraphyMode;
+            
+            if (isCalligraphyMode) {
+                noteBody.classList.add('calligraphy-mode');
+            } else {
+                noteBody.classList.remove('calligraphy-mode');
+            }
+            
+            noteBody.focus();
+        }
+        
+        // Weather App Functionality
+        function getWeather() {
+            const location = document.getElementById('weatherLocation').value || 'New York';
+            
+            // In a real app, this would call a weather API
+            // For demo purposes, we'll use mock data
+            
+            // Mock current weather data
+            const weatherData = {
+                location: location,
+                temperature: Math.round(Math.random() * 15 + 15), // 15-30°C
+                description: ['Sunny', 'Partly Cloudy', 'Cloudy', 'Rainy'][Math.floor(Math.random() * 4)],
+                humidity: Math.round(Math.random() * 30 + 50), // 50-80%
+                windSpeed: Math.round(Math.random() * 20 + 5), // 5-25 km/h
+                pressure: Math.round(Math.random() * 20 + 1000), // 1000-1020 hPa
+                visibility: Math.round(Math.random() * 5 + 5), // 5-10 km
+                icon: getWeatherIcon('Sunny')
+            };
+            
+            // Update current weather display
+            document.getElementById('temperature').textContent = `${weatherData.temperature}°C`;
+            document.getElementById('weatherDescription').textContent = weatherData.description;
+            document.getElementById('location').textContent = `${weatherData.location}, US`;
+            document.getElementById('weatherIcon').innerHTML = `<i class="fas ${weatherData.icon}"></i>`;
+            
+            // Update weather details
+            document.getElementById('humidity').textContent = `${weatherData.humidity}%`;
+            document.getElementById('windSpeed').textContent = `${weatherData.windSpeed} km/h`;
+            document.getElementById('pressure').textContent = `${weatherData.pressure} hPa`;
+            document.getElementById('visibility').textContent = `${weatherData.visibility} km`;
+            
+            // Generate 5-day forecast
+            const forecastList = document.getElementById('forecastList');
+            forecastList.innerHTML = '';
+            
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const today = new Date();
+            
+            for (let i = 0; i < 5; i++) {
+                const forecastDate = new Date();
+                forecastDate.setDate(today.getDate() + i);
+                
+                const forecast = {
+                    day: days[forecastDate.getDay()],
+                    icon: getWeatherIcon(['Sunny', 'Partly Cloudy', 'Cloudy', 'Rainy'][Math.floor(Math.random() * 4)]),
+                    high: Math.round(Math.random() * 5 + weatherData.temperature),
+                    low: Math.round(Math.random() * 5 + (weatherData.temperature - 10))
+                };
+                
+                const forecastItem = document.createElement('div');
+                forecastItem.className = 'forecast-item';
+                forecastItem.innerHTML = `
+                    <div class="forecast-day">${forecast.day}</div>
+                    <div class="forecast-icon"><i class="fas ${forecast.icon}"></i></div>
+                    <div class="forecast-temp">${forecast.high}°/${forecast.low}°</div>
+                `;
+                
+                forecastList.appendChild(forecastItem);
+            }
+            
+            // Generate hourly rain prediction
+            generateRainPrediction();
+        }
+        
+        function getWeatherIcon(description) {
+            const icons = {
+                'Sunny': 'fa-sun',
+                'Partly Cloudy': 'fa-cloud-sun',
+                'Cloudy': 'fa-cloud',
+                'Rainy': 'fa-cloud-rain'
+            };
+            
+            return icons[description] || 'fa-question';
+        }
+        
+        function generateRainPrediction() {
+            const rainChart = document.getElementById('rainChart');
+            rainChart.innerHTML = '';
+            
+            // Generate random rain probabilities for each hour
+            const hours = ['6AM', '9AM', '12PM', '3PM', '6PM', '9PM'];
+            const rainProbabilities = hours.map(() => Math.floor(Math.random() * 100));
+            
+            // Find the highest probability for the summary
+            const maxProbability = Math.max(...rainProbabilities);
+            const maxIndex = rainProbabilities.indexOf(maxProbability);
+            
+            let summaryText = '';
+            if (maxProbability > 70) {
+                summaryText = `Heavy rain expected around ${hours[maxIndex]} (${maxProbability}% chance)`;
+            } else if (maxProbability > 40) {
+                summaryText = `Light rain expected around ${hours[maxIndex]} (${maxProbability}% chance)`;
+            } else {
+                summaryText = 'No significant rain expected today';
+            }
+            
+            document.getElementById('rainSummary').textContent = summaryText;
+            
+            // Create rain bars
+            hours.forEach((hour, index) => {
+                const probability = rainProbabilities[index];
+                const barHeight = probability;
+                
+                const rainBar = document.createElement('div');
+                rainBar.className = 'rain-bar';
+                rainBar.style.height = `${barHeight}px`;
+                rainBar.setAttribute('data-percent', probability);
+                
+                const hourLabel = document.createElement('div');
+                hourLabel.className = 'rain-hour';
+                hourLabel.textContent = hour;
+                
+                rainBar.appendChild(hourLabel);
+                rainChart.appendChild(rainBar);
+            });
+        }
+        
+        // Settings App Functionality
+        function toggleDarkMode() {
+            const isDarkMode = document.getElementById('darkModeToggle').checked;
+            // In a real app, this would change the theme of the entire OS
+            alert(`Dark mode ${isDarkMode ? 'enabled' : 'disabled'}`);
+        }
+        
+        function changeBackground(gradient) {
+            document.body.style.background = gradient;
+            // Save preference to localStorage
+            localStorage.setItem('background', gradient);
+        }
+        
+        // Load saved background preference
+        const savedBackground = localStorage.getItem('background');
+        if (savedBackground) {
+            document.body.style.background = savedBackground;
+        }
     </script>
-
-// music app needs spotify api</h2>
-// deep sea and space navigation systems need connection with autonomous tech  </h2>
 </body>
 </html>
